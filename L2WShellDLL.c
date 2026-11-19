@@ -49,7 +49,7 @@ __declspec(dllexport) int __cdecl ParseCommandExport(char *line, char *args[], i
     return ParseCommand(line, args, limit);
 }
 
-#pragma comment(linker, "/EXPORT:ParseCommand=ParseCommandExport")
+#pragma comment(linker, "/EXPORT:ParseCommand=_ParseCommandExport") //linker issue
 
 static int approved_verb(const char *verb)
 {
@@ -93,7 +93,6 @@ static int append_token(char *out, size_t capacity, const char *token)
     return 1;
 }
 
-int ExecuteCommand;
 __declspec(dllexport) int __stdcall ExecuteCommand(const char *windows_verb, const char *const args[], int argc)
 {
     char command[MAX_LINE * 2] = {0};
@@ -144,4 +143,4 @@ __declspec(dllexport) int __cdecl ExecuteCommandAlias(const char *verb, const ch
     return ExecuteCommand(verb, args, argc);
 }
 
-#pragma comment(linker, "/EXPORT:ExecuteCommand=ExecuteCommandAlias")
+#pragma comment(linker, "/EXPORT:ExecuteCommand=_ExecuteCommandAlias")
